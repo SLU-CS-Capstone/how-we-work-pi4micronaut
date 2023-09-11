@@ -1,31 +1,42 @@
 from graph import Graph
 
 class Maze:
-    def __init__(self, size):
-        self.size = size
+    def __init__(self, rows,columns=None):
+        self.rows = rows
+        if columns == None:
+            self.columns = rows
+        else:
+            self.columns = columns
+        
+        if self.rows < self.columns:
+            self.number = self.columns
+        else:
+            self.number = self.rows
+
+
         self.nodes = []
-        self.graph = Graph(size*size)
+        self.graph = Graph(self.rows*self.columns)
 
         # label the nodes from 0 to (N*N)-1
-        for i in range(0, self.size):
+        for i in range(0, self.rows):
             self.nodes.append([])
-            for j in range(0, self.size):
-                self.nodes[i].append(i*self.size + j)
+            for j in range(0, self.columns):
+                self.nodes[i].append(i*self.number + j)
 
         # each node in the graph is connected to UP, DOWN, LEFT, RIGHT (if they exist)
-        for i in range(0, self.size):
-            for j in range(0, self.size):
+        for i in range(0, self.rows):
+            for j in range(0, self.columns):
                 node = self.nodes[i][j]
                 if i > 0:
                     up = self.nodes[i-1][j]
                     self.graph.add_edge(node, up)
-                if i < self.size-1:
+                if i < self.number-1:
                     down = self.nodes[i+1][j]
                     self.graph.add_edge(node, down)
                 if j > 0:
                     left = self.nodes[i][j-1]
                     self.graph.add_edge(node, left)
-                if j < self.size-1:
+                if j < self.number-1:
                     right = self.nodes[i][j+1]
                     self.graph.add_edge(node, right)
     
@@ -34,28 +45,28 @@ class Maze:
         for i in range(0, self.graph.num_nodes):
             for j in range(0, self.graph.num_nodes):
                 if spanning_tree.has_edge(i, j):
-                    self.graph.remove_edge(i, j);
+                    self.graph.remove_edge(i, j)
                     
     def print(self):
-        result = ' '+('_ ' * (self.size-1))+'_\n'
-        for i in range(self.size):
+        result = ' '+('_ ' * (self.number-1))+'_\n'
+        for i in range(self.rows):
             result+='|'
-            for j in range(self.size):
+            for j in range(self.columns):
                 node = self.nodes[i][j]
                 # check the floor (bottom wall)
-                if i < self.size-1 and self.graph.has_edge(node, self.nodes[i+1][j]):
+                if i < self.number-1 and self.graph.has_edge(node, self.nodes[i+1][j]):
                     result+='_'
-                elif (i == self.size-1):
+                elif (i == self.number-1):
                     result+='_'
                 else:
                     result+=' '
 
                 # check the right wall
-                if j < self.size-1 and self.graph.has_edge(node, self.nodes[i][j+1]):
+                if j < self.number-1 and self.graph.has_edge(node, self.nodes[i][j+1]):
                     result+='|'
-                elif i < self.size-1 and j < self.size-1:
+                elif i < self.number-1 and j < self.number-1:
                     result+=' '
-                elif i == self.size-1 and j < self.size-1:
+                elif i == self.number-1 and j < self.number-1:
                     result+='_'
             result+='|\n'
         print(result)
