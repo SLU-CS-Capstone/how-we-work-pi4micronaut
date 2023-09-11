@@ -2,6 +2,7 @@ from graph import Graph
 
 class Maze:
     def __init__(self, rows,columns=None):
+        # row
         self.rows = rows
         if columns == None:
             self.columns = rows
