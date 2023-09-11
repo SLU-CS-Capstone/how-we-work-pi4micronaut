@@ -1,4 +1,5 @@
 from graph import Graph
+from fpdf import FPDF
 
 class Maze:
     def __init__(self, size):
@@ -35,7 +36,7 @@ class Maze:
             for j in range(0, self.graph.num_nodes):
                 if spanning_tree.has_edge(i, j):
                     self.graph.remove_edge(i, j);
-                    
+      #Adjust function to accept parameters.              
     def print(self):
         result = ' '+('_ ' * (self.size-1))+'_\n'
         for i in range(self.size):
