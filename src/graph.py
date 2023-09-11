@@ -1,9 +1,11 @@
 import random
 
 class Graph:
-    def __init__(self, num_nodes):
+    def __init__(self, num_nodes, seed=None):
         self.num_nodes = num_nodes
         self.graph = {}
+        if seed != None:
+            random.seed(seed)
         
     def add_edge(self, u, v):
         if u in self.graph:
