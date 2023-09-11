@@ -1,6 +1,9 @@
 from maze import Maze
+import sys
 
-maze = Maze(20)
+size = int(sys.argv[1])
+
+maze = Maze(size)
 maze.generate_maze()
 maze.print()
 print("Welcome to 2D maze")
